@@ -1,4 +1,3 @@
-import Layout from "component/Layout";
 import Tags from 'views/Tags';
 import Money from 'views/Money';
 import Statistics from 'views/Statistics';

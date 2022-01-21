@@ -104,9 +104,7 @@ module.exports = function(webpackEnv) {
                 loader: MiniCssExtractPlugin.loader,
                 // css is located in `static/css`, use '../../' to locate index.html folder
                 // in production `paths.publicUrlOrPath` can be a relative path
-                options: paths.publicUrlOrPath.startsWith('.') ?
-                    { publicPath: '../../' } :
-                    {},
+                options: paths.publicUrlOrPath.startsWith('.') ? { publicPath: '../../' } : {},
             },
             {
                 loader: require.resolve('css-loader'),
@@ -162,34 +160,31 @@ module.exports = function(webpackEnv) {
         devtool: isEnvProduction ?
             shouldUseSourceMap ?
             'source-map' :
-            false :
-            isEnvDevelopment && 'cheap-module-source-map',
+            false : isEnvDevelopment && 'cheap-module-source-map',
         // These are the "entry points" to our application.
         // This means they will be the "root" imports that are included in JS bundle.
-        entry: isEnvDevelopment && !shouldUseReactRefresh ?
-            [
-                // Include an alternative client for WebpackDevServer. A client's job is to
-                // connect to WebpackDevServer by a socket and get notified about changes.
-                // When you save a file, the client will either apply hot updates (in case
-                // of CSS changes), or refresh the page (in case of JS changes). When you
-                // make a syntax error, this client will display a syntax error overlay.
-                // Note: instead of the default WebpackDevServer client, we use a custom one
-                // to bring better experience for Create React App users. You can replace
-                // the line below with these two lines if you prefer the stock client:
-                //
-                // require.resolve('webpack-dev-server/client') + '?/',
-                // require.resolve('webpack/hot/dev-server'),
-                //
-                // When using the experimental react-refresh integration,
-                // the webpack plugin takes care of injecting the dev client for us.
-                webpackDevClientEntry,
-                // Finally, this is your app's code:
-                paths.appIndexJs,
-                // We include the app code last so that if there is a runtime error during
-                // initialization, it doesn't blow up the WebpackDevServer client, and
-                // changing JS code would still trigger a refresh.
-            ] :
+        entry: isEnvDevelopment && !shouldUseReactRefresh ? [
+            // Include an alternative client for WebpackDevServer. A client's job is to
+            // connect to WebpackDevServer by a socket and get notified about changes.
+            // When you save a file, the client will either apply hot updates (in case
+            // of CSS changes), or refresh the page (in case of JS changes). When you
+            // make a syntax error, this client will display a syntax error overlay.
+            // Note: instead of the default WebpackDevServer client, we use a custom one
+            // to bring better experience for Create React App users. You can replace
+            // the line below with these two lines if you prefer the stock client:
+            //
+            // require.resolve('webpack-dev-server/client') + '?/',
+            // require.resolve('webpack/hot/dev-server'),
+            //
+            // When using the experimental react-refresh integration,
+            // the webpack plugin takes care of injecting the dev client for us.
+            webpackDevClientEntry,
+            // Finally, this is your app's code:
             paths.appIndexJs,
+            // We include the app code last so that if there is a runtime error during
+            // initialization, it doesn't blow up the WebpackDevServer client, and
+            // changing JS code would still trigger a refresh.
+        ] : paths.appIndexJs,
         output: {
             // The build folder.
             path: isEnvProduction ? paths.appBuild : undefined,
@@ -198,14 +193,12 @@ module.exports = function(webpackEnv) {
             // There will be one main bundle, and one file per asynchronous chunk.
             // In development, it does not produce real files.
             filename: isEnvProduction ?
-                'static/js/[name].[contenthash:8].js' :
-                isEnvDevelopment && 'static/js/bundle.js',
+                'static/js/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
             // TODO: remove this when upgrading to webpack 5
             futureEmitAssets: true,
             // There are also additional JS chunk files if you use code splitting.
             chunkFilename: isEnvProduction ?
-                'static/js/[name].[contenthash:8].chunk.js' :
-                isEnvDevelopment && 'static/js/[name].chunk.js',
+                'static/js/[name].[contenthash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
             // webpack uses `publicPath` to determine where the app is being served from.
             // It requires a trailing slash, or the file assets will get an incorrect path.
             // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -215,8 +208,7 @@ module.exports = function(webpackEnv) {
                 info =>
                 path
                 .relative(paths.appSrc, info.absoluteResourcePath)
-                .replace(/\\/g, '/') :
-                isEnvDevelopment &&
+                .replace(/\\/g, '/') : isEnvDevelopment &&
                 (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
             // Prevents conflicts when multiple webpack runtimes (from different apps)
             // are used on the same page.
@@ -273,16 +265,14 @@ module.exports = function(webpackEnv) {
                 new OptimizeCSSAssetsPlugin({
                     cssProcessorOptions: {
                         parser: safePostCssParser,
-                        map: shouldUseSourceMap ?
-                            {
-                                // `inline: false` forces the sourcemap to be output into a
-                                // separate file
-                                inline: false,
-                                // `annotation: true` appends the sourceMappingURL to the end of
-                                // the css file, helping the browser find the sourcemap
-                                annotation: true,
-                            } :
-                            false,
+                        map: shouldUseSourceMap ? {
+                            // `inline: false` forces the sourcemap to be output into a
+                            // separate file
+                            inline: false,
+                            // `annotation: true` appends the sourceMappingURL to the end of
+                            // the css file, helping the browser find the sourcemap
+                            annotation: true,
+                        } : false,
                     },
                     cssProcessorPluginOptions: {
                         preset: ['default', { minifyFontValues: { removeQuotes: false } }],
@@ -369,7 +359,14 @@ module.exports = function(webpackEnv) {
                             test: /\.svg$/,
                             use: [
                                 { loader: 'svg-sprite-loader', options: {} },
-                                { loader: 'svgo-loader', options: {} },
+                                {
+                                    loader: 'svgo-loader',
+                                    options: {
+                                        plugins: [
+                                            { removeAttrs: { attrs: 'fill' } },
+                                        ],
+                                    }
+                                },
                             ]
                         },
                         {
@@ -475,8 +472,7 @@ module.exports = function(webpackEnv) {
                             use: getStyleLoaders({
                                 importLoaders: 1,
                                 sourceMap: isEnvProduction ?
-                                    shouldUseSourceMap :
-                                    isEnvDevelopment,
+                                    shouldUseSourceMap : isEnvDevelopment,
                             }),
                             // Don't consider CSS imports dead code even if the
                             // containing package claims to have no side effects.
@@ -491,8 +487,7 @@ module.exports = function(webpackEnv) {
                             use: getStyleLoaders({
                                 importLoaders: 1,
                                 sourceMap: isEnvProduction ?
-                                    shouldUseSourceMap :
-                                    isEnvDevelopment,
+                                    shouldUseSourceMap : isEnvDevelopment,
                                 modules: {
                                     getLocalIdent: getCSSModuleLocalIdent,
                                 },
@@ -507,8 +502,7 @@ module.exports = function(webpackEnv) {
                             use: getStyleLoaders({
                                     importLoaders: 3,
                                     sourceMap: isEnvProduction ?
-                                        shouldUseSourceMap :
-                                        isEnvDevelopment,
+                                        shouldUseSourceMap : isEnvDevelopment,
                                 },
                                 'sass-loader'
                             ),
@@ -525,8 +519,7 @@ module.exports = function(webpackEnv) {
                             use: getStyleLoaders({
                                     importLoaders: 3,
                                     sourceMap: isEnvProduction ?
-                                        shouldUseSourceMap :
-                                        isEnvDevelopment,
+                                        shouldUseSourceMap : isEnvDevelopment,
                                     modules: {
                                         getLocalIdent: getCSSModuleLocalIdent,
                                     },
@@ -563,8 +556,7 @@ module.exports = function(webpackEnv) {
                         inject: true,
                         template: paths.appHtml,
                     },
-                    isEnvProduction ?
-                    {
+                    isEnvProduction ? {
                         minify: {
                             removeComments: true,
                             collapseWhitespace: true,
@@ -688,11 +680,9 @@ module.exports = function(webpackEnv) {
                 async: isEnvDevelopment,
                 checkSyntacticErrors: true,
                 resolveModuleNameModule: process.versions.pnp ?
-                    `${__dirname}/pnpTs.js` :
-                    undefined,
+                    `${__dirname}/pnpTs.js` : undefined,
                 resolveTypeReferenceDirectiveModule: process.versions.pnp ?
-                    `${__dirname}/pnpTs.js` :
-                    undefined,
+                    `${__dirname}/pnpTs.js` : undefined,
                 tsconfig: paths.appTsConfig,
                 reportFiles: [
                     // This one is specifically to match during CI tests,
