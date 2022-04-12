@@ -14,12 +14,7 @@ function Money() {
   return (
     <MyLayout>
       <TagsSection/>
-      <NotesSection>
-        <label>
-          <span>备注</span>
-          <input type='text'/>
-        </label>
-      </NotesSection>
+      <NotesSection/>
       <CategorySection>
         <ul>
           <li>支出</li>
