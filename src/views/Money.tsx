@@ -1,25 +1,18 @@
 import Layout from "component/Layout";
 import styled from "styled-components";
+import {TagsSection} from './Money/TagsSection';
+import {CategorySection} from './Money/CategorySection';
+import {NotesSection} from './Money/NotesSection';
+import {NumberPadSection} from './Money/NumberPadSection';
 
-const TagsSection = styled.section`
-
-`
-
-const NotesSection = styled.section`
-
-`
-
-const   CategorySection = styled.section`
-
-`
-
-const NumberPadSection = styled.section`
-
+const MyLayout = styled(Layout)`
+  display:flex;
+  flex-direction: column;
 `
 
 function Money() {
   return (
-    <Layout>
+    <MyLayout>
       <TagsSection>
         <ol>
           <li>衣</li>
@@ -42,10 +35,10 @@ function Money() {
         </ul>
       </CategorySection>
       <NumberPadSection>
-        <div>
+        <div className="output">
           100
         </div>
-        <div>
+        <div className="pad clearfix">
           <button>1</button>
           <button>2</button>
           <button>3</button>
@@ -57,12 +50,12 @@ function Money() {
           <button>7</button>
           <button>8</button>
           <button>9</button>
-          <button>OK</button>
-          <button>0</button>
-          <button>.</button>
+          <button className="ok">OK</button>
+          <button className="zero">0</button>
+          <button className="dot">.</button>
         </div>
       </NumberPadSection>
-    </Layout>
+    </MyLayout>
   );
 }
 
