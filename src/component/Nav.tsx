@@ -38,19 +38,19 @@ const Nav = () => {
         <li>
           <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""} >
             <Icon name='tag' />
-            标签页
+            记账
           </NavLink>
         </li>
         <li>
           <NavLink to="/money" className={({ isActive }) => isActive ? "selected" : ""} >
             <Icon name="money" />
-            记账页
+            明细
           </NavLink>
         </li>
         <li>
           <NavLink to="/statistics"  className={({ isActive }) => isActive ? "selected" : ""} >
             <Icon name="chart" />
-            统计页
+            报告
           </NavLink>
         </li>
       </ul>
