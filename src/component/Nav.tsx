@@ -36,7 +36,7 @@ const Nav = () => {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/" className={({ isActive }) => isActive ? "selected" : ""} >
+          <NavLink to="/tags" className={({ isActive }) => isActive ? "selected" : ""} >
             <Icon name='tag' />
             记账
           </NavLink>
