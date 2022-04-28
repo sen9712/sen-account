@@ -5,6 +5,9 @@ import Layout from '../component/Layout';
 import Icon from '../component/Icon';
 import {Button} from '../component/Button';
 import styled from 'styled-components';
+import {FileInput} from '../component/FileInput';
+import { Center } from 'component/Center';
+import { Space } from 'component/Space';
 
 
 const Topbar = styled.header`
@@ -16,10 +19,38 @@ const Topbar = styled.header`
   background:white;
 `
 
+const InputWrapper = styled.div`
+  background:white;
+  padding: 0 16px;
+  margin-top: 8px;
+`;
+
 const Tag: React.FC = () => {
-  const {findTag} = useTags()
+  const {findTag, updateTag} = useTags()
   const {id = ''} = useParams<'id'>();
   const tag = findTag(id)
+  const tagContent = (tag: { id: number; name: string }) => (
+    <div>
+      <InputWrapper>
+        <FileInput label="标签名" type="text" placeholder="标签名"
+               value={tag.name}
+               onChange={(e) => {
+                 updateTag(tag.id, {name: e.target.value});
+               }}
+        />
+      </InputWrapper>
+      <Center>
+        <Space/>
+        <Space/>
+        <Space/>
+        <Button
+        //   onClick={() => {
+        //   deleteTag(tag.id);
+        // }}
+        >删除标签</Button>
+      </Center>
+    </div>
+  );
   return(
     <Layout>
       <Topbar>
@@ -27,21 +58,8 @@ const Tag: React.FC = () => {
         <span>编辑标签</span>
         <Icon/>
       </Topbar>
-      <div>
-        {tag && tag.name}
-      </div>
-      <div>
-        <label>
-          <span>备注</span>
-          <input
-            type="text"
-            placeholder="标签名"
-          />
-        </label>
-      </div>
-      <div>
-        <Button>删除标签</Button>
-      </div>
+      {/* eslint-disable-next-line react/jsx-no-undef */}
+      {tag ? tagContent(tag) : <Center>tag 不存在</Center>}
     </Layout>
   )
 }

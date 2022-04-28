@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Icon from '../component/Icon';
 import { Link } from "react-router-dom";
 import { Button } from "component/Button";
+import { Center } from "component/Center";
+import { Space } from "component/Space";
 
 const TagList = styled.ol`
   font-size: 16px;
@@ -21,19 +23,6 @@ const TagList = styled.ol`
     }
   }
 `;
-
-const Center = styled.div`
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Space = styled.div`
-  height: 16px;
-`;
-
-
 
 function Tags() {
   const {tags}= useTags()
