@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from 'react-router-dom';
 import {useTags} from '../useTags';
 import Layout from '../component/Layout';
 import Icon from '../component/Icon';
@@ -26,7 +26,8 @@ const InputWrapper = styled.div`
 `;
 
 const Tag: React.FC = () => {
-  const {findTag, updateTag} = useTags()
+  const {findTag, updateTag, deleteTag} = useTags()
+  const  navigate = useNavigate()
   const {id = ''} = useParams<'id'>();
   const tag = findTag(id)
   const tagContent = (tag: { id: number; name: string }) => (
@@ -44,17 +45,22 @@ const Tag: React.FC = () => {
         <Space/>
         <Space/>
         <Button
-        //   onClick={() => {
-        //   deleteTag(tag.id);
-        // }}
+          onClick={() => {
+          deleteTag(tag.id);
+        }}
         >删除标签</Button>
       </Center>
     </div>
   );
+
+  const onClickBack = () => {
+    navigate(-1)
+  }
+
   return(
     <Layout>
       <Topbar>
-        <Icon name='left' />
+        <Icon name='left' onClick={onClickBack}/>
         <span>编辑标签</span>
         <Icon/>
       </Topbar>
