@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {useTags} from '../useTags';
+import {useTags} from '../hooks/useTags';
 import Layout from '../component/Layout';
 import Icon from '../component/Icon';
 import {Button} from '../component/Button';

@@ -5,7 +5,8 @@ import {generateOutput} from './NumberPadSection/generateOutput';
 
 type Props = {
   value: string,
-  onChange: (value: string) => void
+  onChange: (value: string) => void,
+  onOk?: () => void;
 }
 
 const NumberPadSection: React.FC<Props> = (props) => {
@@ -24,7 +25,10 @@ const NumberPadSection: React.FC<Props> = (props) => {
   const onClickButtonWrapper = (e: React.MouseEvent) => {
   const text = (e.target as HTMLButtonElement).textContent
     if(text === null) return;
-    if(text === 'OK') return;
+    if(text === 'OK') {
+      if (props.onOk) {props.onOk();}
+      return;
+    }
     if ('0123456789.'.split('').concat(['删除', '清空']).indexOf(text) >= 0) {
       setOutput(generateOutput(text, output));
     }
@@ -46,7 +50,7 @@ const NumberPadSection: React.FC<Props> = (props) => {
         <button>7</button>
         <button>8</button>
         <button>9</button>
-        <button className="ok">OK</button>
+        <button className="ok" >OK</button>
         <button className="zero">0</button>
         <button className="dot">.</button>
       </div>

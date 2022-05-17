@@ -1,5 +1,5 @@
 import Layout from "component/Layout";
-import {useTags} from '../useTags';
+import {useTags} from '../hooks/useTags';
 import styled from 'styled-components';
 import Icon from '../component/Icon';
 import { Link } from "react-router-dom";
