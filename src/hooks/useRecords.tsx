@@ -33,6 +33,9 @@ export const useRecords = () => {
   }, [records])
 
   const addRecords = (newRecord: newRecordItem) => {
+    if(newRecord.amount.slice(-1) === '.'){
+      newRecord.amount = newRecord.amount + '0'
+    }
     if (JSON.parse(newRecord.amount) <= 0) {
       alert('请输入金额');
       return false;
@@ -43,6 +46,7 @@ export const useRecords = () => {
     }
     const record = {...newRecord, createdAt: (new Date()).toISOString()}
     setRecords([...records, record])
+    return true
   }
 
   return {records, addRecords}

@@ -63,8 +63,13 @@ function useTags() { //封装一个自定义的Hook
     }
   }
 
+  const getTagName = (id: number) => {
+    const tag = tags.filter(t=>t.id === id)[0]
+    return tag? tag.name: '';
+  }
+  
   //es6写法,将数组通过对象return出去
-  return {tags, setTags, findTag, updateTag, deleteTag, addTag}
+  return {tags, setTags, findTag, updateTag, deleteTag, addTag, getTagName}
 }
 
 export {useTags}
